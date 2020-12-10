@@ -1,0 +1,11 @@
+{
+  "name": "rugabarbo/domain-validator",
+  "description": "Domain validator for humans.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pavel Ivanov",
+      "email": "rugabarbo@gmail.com"
+    }
+  ]
+}
