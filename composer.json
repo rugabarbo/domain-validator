@@ -7,5 +7,22 @@
       "name": "Pavel Ivanov",
       "email": "rugabarbo@gmail.com"
     }
-  ]
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "arubacao/tld-checker": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "rugabarbo\\DomainValidator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "rugabarbo\\DomainValidator\\Test\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  }
 }
