@@ -3,6 +3,7 @@
 namespace rugabarbo\DomainValidator;
 
 use Arubacao\TldChecker\Validator;
+use function Symfony\Component\String\u;
 
 class DomainValidator
 {
@@ -80,9 +81,13 @@ class DomainValidator
 
     public function isValid(string $value): bool
     {
+        $value = u($value);
+
         if ($this->paddingsAllowed) {
-            $value = trim($value);
+            $value = $value->trim();
         }
+
+        $value = $value->toString();
 
         return preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $value)
             && preg_match("/^.{1,253}$/", $value)

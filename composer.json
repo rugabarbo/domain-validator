@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "arubacao/tld-checker": "^1.2"
+    "arubacao/tld-checker": "^1.2",
+    "symfony/string": "^5.2"
   },
   "autoload": {
     "psr-4": {
