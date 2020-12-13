@@ -3,6 +3,7 @@
 namespace rugabarbo\DomainValidator;
 
 use Arubacao\TldChecker\Validator;
+use Symfony\Component\String\UnicodeString;
 use function Symfony\Component\String\u;
 
 class DomainValidator
@@ -97,6 +98,7 @@ class DomainValidator
             return false;
         }
 
+        /** @var UnicodeString $label */
         foreach ($labels as $label) {
             if (!$label->match('/^[a-zA-Z\d-]{1,63}$/')) {
                 return false;
@@ -107,8 +109,8 @@ class DomainValidator
             }
         }
 
-        $value = $value->toString();
+        $lastLabel = $label;
 
-        return Validator::endsWithTld($value);
+        return Validator::isTld($lastLabel);
     }
 }
