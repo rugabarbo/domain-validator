@@ -3,6 +3,7 @@
 namespace rugabarbo\DomainValidator;
 
 use Arubacao\TldChecker\Validator;
+use InvalidArgumentException;
 use Symfony\Component\String\UnicodeString;
 use function Symfony\Component\String\u;
 
@@ -82,7 +83,11 @@ class DomainValidator
 
     public function isValid(string $value): bool
     {
-        $value = u($value);
+        try {
+            $value = u($value);
+        } catch (InvalidArgumentException $e) {
+            return false;
+        }
 
         if ($this->paddingsAllowed) {
             $value = $value->trim();

@@ -56,6 +56,9 @@ class DataProviderBuilder
             ['.google.com', false],
             ['google.com.', false],
 
+            // Non UTF-8 symbols
+            ["goo\xF0gle.com", false],
+
             // Not domains
             ['<script', false],
             ['alert(', false],
