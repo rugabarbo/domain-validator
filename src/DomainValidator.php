@@ -87,11 +87,28 @@ class DomainValidator
             $value = $value->trim();
         }
 
+        if ($value->length() > 253) {
+            return false;
+        }
+
+        $labels = $value->split('.');
+
+        if (count($labels) === 1) {
+            return false;
+        }
+
+        foreach ($labels as $label) {
+            if (!$label->match('/^[a-zA-Z\d-]{1,63}$/')) {
+                return false;
+            }
+
+            if ($label->startsWith('-') || $label->endsWith('-')) {
+                return false;
+            }
+        }
+
         $value = $value->toString();
 
-        return preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $value)
-            && preg_match("/^.{1,253}$/", $value)
-            && preg_match("/^[^.]{1,63}(\.[^.]{1,63})*$/", $value)
-            && Validator::endsWithTld($value);
+        return Validator::endsWithTld($value);
     }
 }
