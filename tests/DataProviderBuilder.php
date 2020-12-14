@@ -5,6 +5,7 @@ namespace rugabarbo\DomainValidator\Test;
 class DataProviderBuilder
 {
     public const ALLOW_PADDINGS = 1;
+    public const ALLOW_IDN = 2;
 
     public static function getData(int $flags = 0): array
     {
@@ -21,6 +22,14 @@ class DataProviderBuilder
             [' google.com ', self::ALLOW_PADDINGS],
             ['google.com ', self::ALLOW_PADDINGS],
             [" \n\r\t\v\0 google.com \n\r\t\v\0 ", self::ALLOW_PADDINGS],
+
+            // IDN
+            ['faß.de', self::ALLOW_IDN],
+            ['japanese.コム', self::ALLOW_IDN],
+            ['урокимедитации.рф', self::ALLOW_IDN],
+
+            // Wrong IDN
+            ['-günter-.de', false],
 
             // Local domains
             ['a', false],

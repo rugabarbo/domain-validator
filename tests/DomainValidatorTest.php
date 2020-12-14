@@ -38,4 +38,20 @@ final class DomainValidatorTest extends TestCase
         $validator = (new DomainValidator())->allowPaddings();
         $this->assertEquals($isValid, $validator->isValid($value));
     }
+
+    public function allowIDNProvider(): array
+    {
+        return DataProviderBuilder::getData(DataProviderBuilder::ALLOW_IDN);
+    }
+
+    /**
+     * @dataProvider allowIDNProvider
+     * @param string $value
+     * @param bool $isValid
+     */
+    public function testAllowIDN(string $value, bool $isValid): void
+    {
+        $validator = (new DomainValidator())->allowIDN();
+        $this->assertEquals($isValid, $validator->isValid($value));
+    }
 }

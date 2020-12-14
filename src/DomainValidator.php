@@ -10,6 +10,7 @@ use function Symfony\Component\String\u;
 class DomainValidator
 {
     private bool $paddingsAllowed = false;
+    private bool $IDNAllowed = false;
 
     public function allowPaddings(): self
     {
@@ -20,7 +21,7 @@ class DomainValidator
 
     public function allowIDN(): self
     {
-        //TODO: Implement
+        $this->IDNAllowed = true;
 
         return $this;
     }
@@ -91,6 +92,24 @@ class DomainValidator
 
         if ($this->paddingsAllowed) {
             $value = $value->trim();
+        }
+
+        $asciiValue = idn_to_ascii($value, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46, $info);
+
+        if ($asciiValue === false) {
+            return false;
+        }
+
+        if ($value->toString() !== $asciiValue) {
+            if (!$this->IDNAllowed) {
+                return false;
+            }
+
+            if ($info !== null && $info['errors'] !== 0) {
+                return false;
+            }
+
+            $value = u($asciiValue);
         }
 
         if ($value->length() > 253) {
